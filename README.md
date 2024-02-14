@@ -65,3 +65,6 @@ decoder_output = decoder(
 # gc.collect()
 # torch.cuda.empty_cache()
 ```
+  
+# Support:
+- ko-fi: (https://ko-fi.com/shiroppo)
