@@ -27,7 +27,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     prior_output = prior(
         prompt=prompt,
         negative_prompt=negative_prompt,
-        generator = generator,
+        generator=generator,
         width=width,
         height=height,
         guidance_scale=guidance_scale,
