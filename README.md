@@ -16,7 +16,12 @@ pip install -r requirements.txt
 ```bash
 pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 ```
-
+# Run:
+On terminal:
+```bash
+.\venv\Scripts\activate
+py app.py
+```
 # Code:
 ```bash
 import torch
@@ -63,12 +68,6 @@ decoder_output = decoder(
 # del decoder
 # gc.collect()
 # torch.cuda.empty_cache()
-```
-# Run:
-On terminal:
-```bash
-.\venv\Scripts\activate
-py app.py
 ```
 # Support:
 - ko-fi: (https://ko-fi.com/shiroppo)
