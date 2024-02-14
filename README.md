@@ -68,7 +68,7 @@ decoder_output = decoder(
 On terminal:
 ```bash
 .\venv\Scripts\activate
-py app_gradio.py
+py app.py
 ```
 # Support:
 - ko-fi: (https://ko-fi.com/shiroppo)
