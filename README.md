@@ -20,13 +20,18 @@ pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 ```
 # Run:
 ### Method 1
-- Double click on app.bat on stable_cascade_easy directory
+- Double click on ```app.bat``` on stable_cascade_easy directory
 ### Method 2
 - On terminal:
 ```bash
 .\venv\Scripts\activate
 py app.py
 ```
+# Update:
+1. ```git pull```(if error: ```git stash``` and after ```git pull```)
+2. ```.\venv\Scripts\activate```
+3. ```pip install -r requirements.txt```
+   
 # Code(without gradio):
 ```bash
 import torch
