@@ -37,7 +37,7 @@ decoder_output = decoder(
     negative_prompt=negative_prompt,
     guidance_scale=0.0,
     output_type="pil",
-    num_inference_steps=30
+    num_inference_steps=12
 ).images[0].save("Image.png")
 
 # del decoder
