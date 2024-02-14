@@ -64,6 +64,11 @@ decoder_output = decoder(
 # gc.collect()
 # torch.cuda.empty_cache()
 ```
-  
+# Run:
+On terminal:
+```bash
+.\venv\Scripts\activate
+py app_gradio.py
+```
 # Support:
 - ko-fi: (https://ko-fi.com/shiroppo)
