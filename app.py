@@ -51,11 +51,12 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         num_inference_steps=12
     ).images[0]
 
+    txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: 12, Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
     del decoder
     gc.collect()
     torch.cuda.empty_cache()
 
-    return image
+    return image, txt_file_data
 
 if __name__ == "__main__":
 
@@ -69,7 +70,7 @@ if __name__ == "__main__":
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
                 gr.Number(value=20, label="Steps",step=1)],
-        outputs="image",
+        outputs=["image","text"],
         title="stable_cascade_easy",
         allow_flagging="never",
         live=False
