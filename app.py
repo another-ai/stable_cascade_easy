@@ -38,7 +38,7 @@ decoder_output = decoder(
     guidance_scale=0.0,
     output_type="pil",
     num_inference_steps=12
-).images[0].save("Image.png")
+).images[0].save("image.png")
 
 # del decoder
 # gc.collect()
