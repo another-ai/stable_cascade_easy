@@ -16,7 +16,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     if prompt =="":
         prompt = "a cat"
-    negative_prompt = ""
+    negative_prompt = negative_prompt
 
     if random_seed:
         input_seed = random.randint(0, 9999999999)
