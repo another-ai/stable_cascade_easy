@@ -14,7 +14,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     prior.requires_safety_checker = False
 
     if prompt =="":
-        prompt = "a cat"
+        prompt = "a cat with the sign: prompt NOT found, write in black"
     negative_prompt = negative_prompt
 
     if random_seed:
@@ -39,7 +39,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     gc.collect()
     torch.cuda.empty_cache()
 
-    decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade",  torch_dtype=torch.float16).to(device)
+    decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
     decoder.safety_checker = None
     decoder.requires_safety_checker = False
 
