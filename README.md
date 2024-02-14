@@ -1,6 +1,6 @@
 # stable_cascade_easy
 Text to Img with Stable Cascade, required less vram than original example on official Hugginface:
-- 60 seconds for a 1280x1536 image with a nVidia RTX3060
+- 60 seconds for a 1280x1536 image with a nVidia RTX3060 with 12 GB VRAM
 - Code:
 ```bash
 import torch
