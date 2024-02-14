@@ -27,13 +27,13 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     prior_output = prior(
         prompt=prompt,
+        negative_prompt=negative_prompt,
+        generator = generator,
         width=width,
         height=height,
-        negative_prompt=negative_prompt,
         guidance_scale=guidance_scale,
         num_inference_steps=num_inference_steps,
-        num_images_per_prompt=num_images_per_prompt,
-        generator = generator
+        num_images_per_prompt=num_images_per_prompt
     )
 
     del prior
