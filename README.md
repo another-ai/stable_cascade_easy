@@ -19,7 +19,10 @@ pip install -r requirements.txt
 pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 ```
 # Run:
-On terminal:
+### Method 1
+-click on app_gradio.bat on stable_cascade_easy directory
+### Method 2
+- On terminal:
 ```bash
 .\venv\Scripts\activate
 py app.py
