@@ -1,5 +1,7 @@
 # stable_cascade_easy
-Text to Img with Stable Cascade, required less vram than original example on official Hugginface
+Text to Img with Stable Cascade, required less vram than original example on official Hugginface:
+- 60 seconds for a 1280x1536 image with a nVidia RTX3060
+- Code:
 ```bash
 import torch
 from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline
@@ -13,13 +15,13 @@ prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-p
 prior.safety_checker = None
 prior.requires_safety_checker = False
 
-prompt = "1 cat"
+prompt = "a cat"
 negative_prompt = ""
 
 prior_output = prior(
     prompt=prompt,
-    height=1536,
     width=1280,
+    height=1536,
     negative_prompt=negative_prompt,
     guidance_scale=4.0,
     num_images_per_prompt=num_images_per_prompt,
