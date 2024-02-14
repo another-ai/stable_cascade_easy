@@ -18,8 +18,8 @@ negative_prompt = ""
 
 prior_output = prior(
     prompt=prompt,
-    height=1024,
-    width=768,
+    height=1536,
+    width=1280,
     negative_prompt=negative_prompt,
     guidance_scale=4.0,
     num_images_per_prompt=num_images_per_prompt,
@@ -40,7 +40,7 @@ decoder_output = decoder(
     negative_prompt=negative_prompt,
     guidance_scale=0.0,
     output_type="pil",
-    num_inference_steps=10
+    num_inference_steps=30
 ).images[0].save("Image.png")
 
 # del decoder
