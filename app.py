@@ -22,6 +22,9 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         input_seed = random.randint(0, 9999999999)
     else:
         input_seed = int(input_seed)
+
+    generator = torch.Generator(device=device).manual_seed(input_seed)
+
     prior_output = prior(
         prompt=prompt,
         width=width,
@@ -30,6 +33,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         guidance_scale=guidance_scale,
         num_inference_steps=num_inference_steps,
         num_images_per_prompt=num_images_per_prompt,
+        generator = generator
     )
 
     del prior
@@ -66,7 +70,9 @@ if __name__ == "__main__":
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
                 gr.Number(value=20, label="Steps",step=1)],
-        outputs="image", 
+        outputs="image",
+        title="stable_cascade_easy",
+        allow_flagging="never",
         live=False
     )
     interface.launch(share=False, inbrowser=True)
