@@ -1,7 +1,7 @@
 # stable_cascade_easy
 Text to Img with Stable Cascade, required less vram than original example on official Hugginface(https://huggingface.co/stabilityai/stable-cascade):
 - 44 seconds for a 1280x1536 image with a nvidia RTX3060 with 12 GB VRAM
-![Screenshot (1781)](https://github.com/another-ai/stable_cascade_easy/assets/9450305/599005a9-aaa3-465b-88fd-2634b70e0a36)
+![](src/screenshot.png)
 
 # Installation:
 1. Install [Python 3.10.6](https://www.python.org/downloads/release/python-3106/), checking "Add Python to PATH".
