@@ -20,7 +20,7 @@ pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 ```
 # Run:
 ### Method 1
-- double click on app_gradio.bat on stable_cascade_easy directory
+- Double click on app.bat on stable_cascade_easy directory
 ### Method 2
 - On terminal:
 ```bash
