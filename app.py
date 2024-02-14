@@ -14,7 +14,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     prior.requires_safety_checker = False
 
     if prompt =="":
-        prompt = "a cat with the sign: prompt NOT found, write in black"
+        prompt = "a cat with the sign: prompt not found, write in black"
     negative_prompt = negative_prompt
 
     if random_seed:
