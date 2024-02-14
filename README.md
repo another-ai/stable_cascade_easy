@@ -24,7 +24,7 @@ On terminal:
 .\venv\Scripts\activate
 py app.py
 ```
-# Code:
+# Code(without gradio):
 ```bash
 import torch
 from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline
