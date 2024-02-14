@@ -10,7 +10,6 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     num_images_per_prompt = 1
 
     prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-prior", torch_dtype=torch.bfloat16).to(device)
-
     prior.safety_checker = None
     prior.requires_safety_checker = False
 
