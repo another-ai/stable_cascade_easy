@@ -51,7 +51,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         num_inference_steps=12
     ).images[0]
 
-    txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+int(num_inference_steps)+", Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
+    txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+str(num_inference_steps)+", Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
     del decoder
     gc.collect()
     torch.cuda.empty_cache()
