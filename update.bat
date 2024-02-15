@@ -1,4 +1,3 @@
-git add *
 git stash
 git pull
 call .\venv\Scripts\activate
