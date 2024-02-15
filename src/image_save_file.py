@@ -30,7 +30,7 @@ def add_metadata_file(file_path, txt_file_data_file):
     targetImage.save(file_path, pnginfo=metadata)
 
 
-def save_file(image_file, txt_file_data_file, new_folder, prompt=""):
+def save_file(image_file, txt_file_data_file):
     file_path = ""
     if image_file != "":
         current_datetime = date_time.now()
@@ -40,19 +40,13 @@ def save_file(image_file, txt_file_data_file, new_folder, prompt=""):
             os.makedirs("./image")
         if not os.path.exists("./image/" + current_date):
             os.makedirs("./image/" + current_date)
-        unique_id_folders = count_folders("./image/" + current_date, new_folder)
-        directory_path = f"./image/{current_date}/{unique_id_folders}"
+        directory_path = f"./image/{current_date}"
         print(f"Directory:{directory_path}")
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
-        # os.makedirs(directory_path, exist_ok=True)
         unique_id = count_file(directory_path)
         file_name = f"{unique_id}_{current_time}.png"
         file_path = f"{directory_path}/{file_name}"
         image_file.save(file_path)
         add_metadata_file(file_path, txt_file_data_file)
     return file_path
-
-
-if __name__ == "__main__":
-    save_file("", "")
