@@ -57,6 +57,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         prompt=prompt,
         negative_prompt=negative_prompt,
         guidance_scale=0.0,
+        generator=generator,
         num_inference_steps=num_inference_steps_decode,
         output_type="pil"
     ).images[0]
@@ -81,7 +82,7 @@ if __name__ == "__main__":
         inputs=[gr.Textbox(value="", lines=4, label="Prompt"),
                 gr.Textbox(value="", lines=4, label="Negative Prompt"),
                 gr.Checkbox(value=True, label="Random Seed"),
-                gr.Number(value=1234, label="Input Seed"),
+                gr.Number(value=1234, label="Input Seed",step=1,minimum=0, maximum=9999999999),
                 gr.Number(value=768, label="Width",step=100),
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
