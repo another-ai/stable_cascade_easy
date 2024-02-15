@@ -28,7 +28,7 @@ pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 py app.py
 ```
 # Update:
-1. ```git pull```(if error: ```git stash``` and after ```git pull```)
+1. ```git pull```(if error: ```git add *```, ```git stash``` and after ```git pull```)
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
    
