@@ -31,7 +31,13 @@ py app.py
 1. ```git pull```(if error: ```git stash``` and after ```git pull```)
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
-   
+
+# Contrast:
+- Possibility to change the final image contrast, value from 0.5 to 1.5, no change with value 1(best results from 0.95 to 1.05)
+
+# Output
+- Created images will be saved in the "image" folder
+  
 # Code(without gradio):
 ```bash
 import torch
