@@ -3,8 +3,13 @@ from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline
 import gc
 import gradio as gr
 import random
+from PIL import ImageEnhance
 
-def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps):
+def constrast_image(image_file, factor):
+    im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
+    return im_constrast
+
+def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,contrast):
 
     device = "cuda"
     num_images_per_prompt = 1
@@ -51,6 +56,8 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         num_inference_steps=12
     ).images[0]
 
+    if contrast != 1:
+        image = constrast_image(image, contrast)
     txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+str(num_inference_steps)+", Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
     del decoder
     gc.collect()
@@ -69,7 +76,8 @@ if __name__ == "__main__":
                 gr.Number(value=768, label="Width",step=100),
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
-                gr.Number(value=20, label="Steps",step=1)],
+                gr.Number(value=20, label="Steps",step=1),
+                gr.Number(value=1, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
         outputs=["image","text"],
         title="stable_cascade_easy",
         allow_flagging="never",
