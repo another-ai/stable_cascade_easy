@@ -14,7 +14,7 @@ def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
     return im_constrast
 
-def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,contrast):
+def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
 
     device = "cuda"
     num_images_per_prompt = 1
@@ -57,8 +57,8 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         prompt=prompt,
         negative_prompt=negative_prompt,
         guidance_scale=0.0,
-        output_type="pil",
-        num_inference_steps=12
+        num_inference_steps=num_inference_steps_decode,
+        output_type="pil"
     ).images[0]
 
     if contrast != 1:
@@ -85,7 +85,8 @@ if __name__ == "__main__":
                 gr.Number(value=768, label="Width",step=100),
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
-                gr.Number(value=20, label="Steps",step=1),
+                gr.Number(value=20, label="Steps Prior",step=1),
+                gr.Number(value=12, label="Steps Decode",step=1),
                 gr.Slider(value=1, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
         outputs=["image","text"],
         title="stable_cascade_easy",
