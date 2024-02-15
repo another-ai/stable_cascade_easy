@@ -86,7 +86,7 @@ if __name__ == "__main__":
                 gr.Number(value=1024, label="Height",step=100),
                 gr.Number(value=4, label="Guidance Scale",step=0.5),
                 gr.Number(value=20, label="Steps",step=1),
-                gr.Number(value=1, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
+                gr.Slider(value=1, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
         outputs=["image","text"],
         title="stable_cascade_easy",
         allow_flagging="never",
