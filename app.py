@@ -66,7 +66,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+str(num_inference_steps)+", Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
 
-    file_path = image_save_file.save_file(image, txt_file_data, True, prompt)
+    file_path = image_save_file.save_file(image, txt_file_data)
 
     del decoder
     gc.collect()
