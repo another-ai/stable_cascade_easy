@@ -39,7 +39,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     else:
         input_seed = int(input_seed)
 
-    if guidance_scale.is_integer():
+    if float(guidance_scale).is_integer():
         guidance_scale = int(guidance_scale) # for txt_file_data correct format
 
     generator = torch.Generator(device=device).manual_seed(input_seed)
