@@ -43,6 +43,9 @@ py app.py
 # Dimensions(Width and Length)
 - multiples of 128 for Stable Cascade, but the app will resize the image for you, so you can use any size you want
 
+# Guidance Scale and Guidance Scale Decode
+- Choice the value that you want for Guidance Scale, for the guidance scale Decode now is hidden because value different than 0 cause error and consequent not creation of the image
+
 # Output
 - Created images will be saved in the "image" folder
   
