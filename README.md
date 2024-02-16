@@ -14,10 +14,6 @@ py -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
-4. and then:
-```bash
-pip install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
-```
 # Run:
 ### Method 1
 - Double click on ```app.bat``` on stable_cascade_easy directory
