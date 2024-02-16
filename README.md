@@ -3,8 +3,8 @@ Text to Img with Stable Cascade(on gradio interface), required less vram than or
 - 44 seconds for a 1280x1536 image with a nvidia RTX3060 with 12 GB VRAM
 ![](src/screenshot.png)
 
-## Why is stable_cascade_easy faster than the hugginface example of stability ai?
-Answer: Because stable cascade is composed of two models, many gb each... stability ai example loads both models simultaneously into the gpu vram, while this application loads the first one(prior), creates the image, cleans the vram and sends the image to the second model(decode) and then returns the final image and cleans the vram completely... for those with less than 16 gb of vram without this "trick" all 2 models would not fit in the vram and then you would have to use the system ram with a huge drop in performance(the time goes from 10 minutes to 44 seconds, 1280x1536 with rtx 3060 12 gb vram)
+## Why is stable_cascade_easy faster than hugginface example of stability ai?
+Answer: Because stable cascade is composed of two models, many gb each... stability ai example loads both models simultaneously into the gpu vram, while this application loads the first one(prior), creates the image, cleans the vram and sends the image to the second model(decode) and then returns the final image and cleans the vram completely... for those with less than 16 gb of vram without this "trick" all 2 models would not fit in the vram and then you would have to use the system ram with a huge drop in performance(the time goes from 10 minutes to 44 seconds, 1280x1536 with nvidia rtx 3060 12 gb vram)
  
 The diffusers branch is currently broken, meanwhile you can install it from an older commit(--force needed):
  ```bash
