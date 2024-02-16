@@ -40,6 +40,9 @@ py app.py
 # Contrast:
 - Possibility to change the final image contrast, value from 0.5 to 1.5, no change with value 1(best results from 0.95 to 1.05)
 
+# Dimensions(Width and Length)
+- multiples of 128 for Stable Cascade, but the app will resize the image for you, so you can use any size you want
+
 # Output
 - Created images will be saved in the "image" folder
   
