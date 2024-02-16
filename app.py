@@ -52,7 +52,8 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     del prior
     gc.collect()
-    torch.cuda.empty_cache()
+    if device=="cuda":
+        torch.cuda.empty_cache()
 
     decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
     decoder.safety_checker = None
@@ -76,7 +77,8 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     del decoder
     gc.collect()
-    torch.cuda.empty_cache()
+    if device=="cuda":
+        torch.cuda.empty_cache()
 
     return image, txt_file_data
 
