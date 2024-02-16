@@ -25,9 +25,9 @@ pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9
 ```
 # Run:
 ### Method 1
-- Double click on ```app.bat``` on stable_cascade_easy directory
+Double click on ```app.bat``` on stable_cascade_easy directory
 ### Method 2
-- On terminal:
+On terminal:
 ```bash
 .\venv\Scripts\activate
 py app.py
@@ -96,5 +96,5 @@ decoder_output = decoder(
 # gc.collect()
 # torch.cuda.empty_cache()
 ```
-# Support:
+## Support:
 - ko-fi: (https://ko-fi.com/shiroppo)
