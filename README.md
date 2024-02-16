@@ -47,7 +47,7 @@ Possibility to change the final image contrast, value from 0.5 to 1.5, no change
 Multiples of 128 for Stable Cascade, but the app will resize the image for you, so you can use any size you want
 
 ## Guidance Scale and Guidance Scale Decode
-Choice the value that you want for Guidance Scale(Prior), for the Guidance Scale Decode now is hidden because value different than 0 cause error and consequent not creation of the image
+Choice the value that you want for Guidance Scale(Prior), for the Guidance Scale Decode now is hidden because value different than 0 causes errors and consequent not creation of the image
   
 ## Code(without gradio):
 ```bash
