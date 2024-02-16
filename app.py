@@ -3,6 +3,7 @@ import sys
 import gc
 path = os.path.abspath("src")
 sys.path.append(path)
+import time
 import torch
 from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline
 import gradio as gr
@@ -55,6 +56,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if device=="cuda":
         torch.cuda.empty_cache()
 
+    start_time = time.time()
     decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
     decoder.safety_checker = None
     decoder.requires_safety_checker = False
@@ -68,6 +70,12 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         output_type="pil"
     ).images[0]
 
+    end_time = time.time()
+
+    duration = end_time - start_time
+
+    print(f"Time: {duration} seconds.")
+    
     if contrast != 1:
         image = constrast_image(image, contrast)
 
@@ -80,7 +88,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if device=="cuda":
         torch.cuda.empty_cache()
 
-    return image, txt_file_data
+    return image, f"{txt_file_data}\nTime: {duration} seconds."
 
 if __name__ == "__main__":
 
