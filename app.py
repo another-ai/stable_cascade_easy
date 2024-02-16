@@ -38,10 +38,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if float(guidance_scale).is_integer():
         guidance_scale = int(guidance_scale) # for txt_file_data correct format
 
-    if float(guidance_scale_decode).is_integer():
-        guidance_scale_decode = int(guidance_scale_decode)
-
-        print("Prompt: " + prompt)
+    print("Prompt: " + prompt)
         
     resize_pixel_w = width % 128
     resize_pixel_h = height % 128
