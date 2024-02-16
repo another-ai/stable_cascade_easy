@@ -26,10 +26,6 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         device = "cpu"
     num_images_per_prompt = 1
 
-    prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-prior", torch_dtype=torch.bfloat16).to(device)
-    prior.safety_checker = None
-    prior.requires_safety_checker = False
-
     if prompt =="":
         prompt = "a cat with the sign: prompt not found, write in black"
     negative_prompt = negative_prompt
@@ -43,6 +39,12 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         guidance_scale = int(guidance_scale) # for txt_file_data correct format
 
     generator = torch.Generator(device=device).manual_seed(input_seed)
+    
+    start_time = time.time()
+    
+    prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-prior", torch_dtype=torch.bfloat16).to(device)
+    prior.safety_checker = None
+    prior.requires_safety_checker = False
 
     prior_output = prior(
         prompt=prompt,
@@ -60,7 +62,6 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if device=="cuda":
         torch.cuda.empty_cache()
 
-    start_time = time.time()
     decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
     decoder.safety_checker = None
     decoder.requires_safety_checker = False
