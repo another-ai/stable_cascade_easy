@@ -10,6 +10,7 @@ import gradio as gr
 import random
 from PIL import ImageEnhance
 import image_save_file
+from dotenv import load_dotenv
 
 def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
@@ -37,6 +38,9 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
         input_seed = random.randint(0, 9999999999)
     else:
         input_seed = int(input_seed)
+
+    if guidance_scale.is_integer():
+        guidance_scale = int(guidance_scale) # for txt_file_data correct format
 
     generator = torch.Generator(device=device).manual_seed(input_seed)
 
@@ -93,18 +97,30 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
 if __name__ == "__main__":
 
+    load_dotenv("./env/.env")
+
+    default_negative_prompt = os.getenv("negative_prompt", "")
+    default_random_seed = os.getenv("random_seed", "true").lower() == "true"
+    default_input_seed = int(os.getenv("input_seed", "1234"))
+    default_width = int(os.getenv("width", "768"))
+    default_height = int(os.getenv("height", "1024"))
+    default_guidance_scale = float(os.getenv("guidance_scale", "4"))
+    default_num_inference_steps = int(os.getenv("num_inference_steps", "20"))
+    default_num_inference_steps_decode = int(os.getenv("num_inference_steps_decode", "12"))
+    default_contrast = float(os.getenv("contrast", "1"))
+
     interface = gr.Interface(
         fn=image_print_create,
         inputs=[gr.Textbox(value="", lines=4, label="Prompt"),
-                gr.Textbox(value="", lines=4, label="Negative Prompt"),
-                gr.Checkbox(value=True, label="Random Seed"),
-                gr.Number(value=1234, label="Input Seed",step=1,minimum=0, maximum=9999999999),
-                gr.Number(value=768, label="Width",step=100),
-                gr.Number(value=1024, label="Height",step=100),
-                gr.Number(value=4, label="Guidance Scale",step=0.5),
-                gr.Number(value=20, label="Steps Prior",step=1),
-                gr.Number(value=12, label="Steps Decode",step=1),
-                gr.Slider(value=1, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
+                gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt"),
+                gr.Checkbox(value=default_random_seed, label="Random Seed"),
+                gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999),
+                gr.Number(value=default_width, label="Width",step=100),
+                gr.Number(value=default_height, label="Height",step=100),
+                gr.Number(value=default_guidance_scale, label="Guidance Scale",step=0.5),
+                gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1),
+                gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1),
+                gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
         outputs=["image","text"],
         title="stable_cascade_easy",
         allow_flagging="never",
