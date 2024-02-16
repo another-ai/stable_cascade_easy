@@ -39,6 +39,9 @@ py app.py
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
 
+# Scheduler
+You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior models, decode model only works with default scheduler.
+
 # Output
 Created images will be saved in the "image" folder
 
