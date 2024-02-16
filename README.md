@@ -29,6 +29,14 @@ py app.py
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
 
+# Diffusers
+ 
+The diffusers branch is currently broken, meanwhile you can install it from an older commit(--force needed):
+ ```
+.\venv\Scripts\activate
+pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
+ ```
+
 # Contrast:
 - Possibility to change the final image contrast, value from 0.5 to 1.5, no change with value 1(best results from 0.95 to 1.05)
 
