@@ -16,7 +16,7 @@ def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
     return im_constrast
 
-def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
+def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,guidance_scale_decode,num_inference_steps,num_inference_steps_decode,contrast):
 
     if torch.cuda.is_available():
         device = "cuda"
@@ -37,6 +37,18 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     if float(guidance_scale).is_integer():
         guidance_scale = int(guidance_scale) # for txt_file_data correct format
+
+    if float(guidance_scale_decode).is_integer():
+        guidance_scale_decode = int(guidance_scale_decode)
+
+        print("Prompt: " + prompt)
+        
+    resize_pixel_w = width % 128
+    resize_pixel_h = height % 128
+    if resize_pixel_w > 0:
+        width = width - resize_pixel_w
+    if resize_pixel_h > 0:
+        height = height - resize_pixel_h
 
     generator = torch.Generator(device=device).manual_seed(input_seed)
     
@@ -69,7 +81,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     image = decoder(image_embeddings=prior_output.image_embeddings.half(),
         prompt=prompt,
         negative_prompt=negative_prompt,
-        guidance_scale=0.0,
+        guidance_scale=guidance_scale_decode,
         generator=generator,
         num_inference_steps=num_inference_steps_decode,
         output_type="pil"
@@ -81,6 +93,14 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
 
     print(f"Time: {duration} seconds.")
     
+    if resize_pixel_w > 0:
+        width = width + resize_pixel_w
+    if resize_pixel_h > 0:
+        height = height + resize_pixel_h
+
+    if resize_pixel_w > 0 or resize_pixel_h > 0:
+        image = image.resize((width, height))
+
     if contrast != 1:
         image = constrast_image(image, contrast)
 
@@ -106,6 +126,7 @@ if __name__ == "__main__":
     default_width = int(os.getenv("width", "768"))
     default_height = int(os.getenv("height", "1024"))
     default_guidance_scale = float(os.getenv("guidance_scale", "4"))
+    default_guidance_scale_decode = float(os.getenv("guidance_scale_decode", "0"))
     default_num_inference_steps = int(os.getenv("num_inference_steps", "20"))
     default_num_inference_steps_decode = int(os.getenv("num_inference_steps_decode", "12"))
     default_contrast = float(os.getenv("contrast", "1"))
@@ -119,6 +140,7 @@ if __name__ == "__main__":
                 gr.Number(value=default_width, label="Width",step=100),
                 gr.Number(value=default_height, label="Height",step=100),
                 gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1),
+                gr.Number(value=default_guidance_scale_decode, label="Guidance Scale Decode",step=1),
                 gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1),
                 gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1),
                 gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
