@@ -40,7 +40,7 @@ py app.py
 3. ```pip install -r requirements.txt```
 
 # Scheduler
-You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior models, decode model only works with default scheduler.
+You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior model, decode model only works with default scheduler.
 
 # Scheduler - LCM
 If you select LCM you can use 6+ steps on prior models so the image creation is even faster
