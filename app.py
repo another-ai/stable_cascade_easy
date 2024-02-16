@@ -88,7 +88,8 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if device=="cuda":
         torch.cuda.empty_cache()
 
-    return image, f"{txt_file_data}\nTime: {duration} seconds."
+    return_txt_file_data = f"{txt_file_data}\nTime: {duration} seconds."
+    return image, return_txt_file_data
 
 if __name__ == "__main__":
 
