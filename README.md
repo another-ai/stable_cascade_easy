@@ -32,7 +32,7 @@ py app.py
 # Diffusers
  
 The diffusers branch is currently broken, meanwhile you can install it from an older commit(--force needed):
- ```
+ ```bash
 .\venv\Scripts\activate
 pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
  ```
