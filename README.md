@@ -38,16 +38,16 @@ py app.py
 3. ```pip install -r requirements.txt```
 
 # Output
-- Created images will be saved in the "image" folder
+Created images will be saved in the "image" folder
 
 ## Contrast:
-- Possibility to change the final image contrast, value from 0.5 to 1.5, no change with value 1(best results from 0.95 to 1.05)
+Possibility to change the final image contrast, value from 0.5 to 1.5, no change with value 1(best results from 0.95 to 1.05)
 
 ## Dimensions(Width and Length)
-- multiples of 128 for Stable Cascade, but the app will resize the image for you, so you can use any size you want
+Multiples of 128 for Stable Cascade, but the app will resize the image for you, so you can use any size you want
 
 ## Guidance Scale and Guidance Scale Decode
-- Choice the value that you want for Guidance Scale, for the guidance scale Decode now is hidden because value different than 0 cause error and consequent not creation of the image
+Choice the value that you want for Guidance Scale, for the guidance scale Decode now is hidden because value different than 0 cause error and consequent not creation of the image
   
 ## Code(without gradio):
 ```bash
