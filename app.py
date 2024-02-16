@@ -117,7 +117,7 @@ if __name__ == "__main__":
                 gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999),
                 gr.Number(value=default_width, label="Width",step=100),
                 gr.Number(value=default_height, label="Height",step=100),
-                gr.Number(value=default_guidance_scale, label="Guidance Scale",step=0.5),
+                gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1),
                 gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1),
                 gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1),
                 gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
