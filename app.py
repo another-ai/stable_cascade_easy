@@ -5,18 +5,23 @@ path = os.path.abspath("src")
 sys.path.append(path)
 import time
 import torch
-from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline
+from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline # Stabke Cascade
+from diffusers import LCMScheduler # LCM Scheduler
+# from diffusers import DPMSolverSinglestepScheduler # Euler a Scheduler error
+from diffusers import DPMSolverMultistepScheduler # DPM++ 2M Karras Scheduler
+# from diffusers import EulerAncestralDiscreteScheduler  # DPM++ SDE Karras Scheduler error
 import gradio as gr
 import random
 from PIL import ImageEnhance
 import image_save_file
 from dotenv import load_dotenv
 
+
 def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
     return im_constrast
 
-def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
+def image_print_create(prompt,negative_prompt,sampler_choice,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
 
     if torch.cuda.is_available():
         device = "cuda"
@@ -55,6 +60,17 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     prior.safety_checker = None
     prior.requires_safety_checker = False
 
+    
+    match sampler_choice:
+        case "DPM++ 2M Karras":
+            sampler = "DPM++ 2M Karras"
+            prior.scheduler = DPMSolverMultistepScheduler.from_config(prior.scheduler.config, use_karras_sigmas='true')
+        case "LCM":
+            sampler = "LCM"
+            prior.scheduler = LCMScheduler.from_config(prior.scheduler.config) 
+        case _:
+            sampler = "DDPMWuerstchenScheduler" #default
+
     prior_output = prior(
         prompt=prompt,
         negative_prompt=negative_prompt,
@@ -74,6 +90,16 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
     decoder.safety_checker = None
     decoder.requires_safety_checker = False
+
+    """ # error with different scheduler in decode than DDPMWuerstchenScheduler
+    match sampler_choice:
+        case "DPM++ 2M Karras":
+            decoder.scheduler = DPMSolverMultistepScheduler.from_config(decoder.scheduler.config, use_karras_sigmas='true')
+        case "LCM":
+            decoder.scheduler = LCMScheduler.from_config(decoder.scheduler.config) 
+        case _:
+            sampler = "DDPMWuerstchenScheduler" #default
+    """
 
     image = decoder(image_embeddings=prior_output.image_embeddings.half(),
         prompt=prompt,
@@ -101,7 +127,7 @@ def image_print_create(prompt,negative_prompt,random_seed,input_seed,width,heigh
     if contrast != 1:
         image = constrast_image(image, contrast)
 
-    txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+str(num_inference_steps)+", Sampler: DDPMWuerstchenScheduler, CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
+    txt_file_data=prompt+"\n"+"Negative prompt: "+negative_prompt+"\n"+"Steps: "+str(num_inference_steps)+", Sampler: "+sampler+", CFG scale: "+str(guidance_scale)+", Seed: "+str(input_seed)+", Size: "+str(width)+"x"+str(height)+", Model: stable_cascade"
 
     file_path = image_save_file.save_file(image, txt_file_data)
 
@@ -126,11 +152,13 @@ if __name__ == "__main__":
     default_num_inference_steps = int(os.getenv("num_inference_steps", "20"))
     default_num_inference_steps_decode = int(os.getenv("num_inference_steps_decode", "12"))
     default_contrast = float(os.getenv("contrast", "1"))
-
+    sampler_choice_list= ["DDPMWuerstchenScheduler","DPM++ 2M Karras","LCM"]
+    
     interface = gr.Interface(
         fn=image_print_create,
         inputs=[gr.Textbox(value="", lines=4, label="Prompt"),
                 gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt"),
+                gr.Dropdown(value=os.path.basename("DDPMWuerstchenScheduler"), choices=sampler_choice_list),
                 gr.Checkbox(value=default_random_seed, label="Random Seed"),
                 gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999),
                 gr.Number(value=default_width, label="Width",step=100),
