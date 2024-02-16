@@ -158,7 +158,7 @@ if __name__ == "__main__":
         fn=image_print_create,
         inputs=[gr.Textbox(value="", lines=4, label="Prompt"),
                 gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt"),
-                gr.Dropdown(value=os.path.basename("DDPMWuerstchenScheduler"), choices=sampler_choice_list),
+                gr.Dropdown(value=os.path.basename("DDPMWuerstchenScheduler"), choices=sampler_choice_list, label="Scheduler"),
                 gr.Checkbox(value=default_random_seed, label="Random Seed"),
                 gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999),
                 gr.Number(value=default_width, label="Width",step=100),
