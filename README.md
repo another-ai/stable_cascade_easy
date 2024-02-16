@@ -13,6 +13,7 @@ cd stable_cascade_easy
 py -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
+pip3 install git+https://github.com/kashif/diffusers.git@wuerstchen-v3
 ```
 # Run:
 ### Method 1
