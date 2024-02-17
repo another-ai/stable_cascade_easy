@@ -9,7 +9,7 @@ from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline #
 from diffusers import LCMScheduler # LCM Scheduler
 # from diffusers import DPMSolverSinglestepScheduler # Euler a Scheduler error
 from diffusers import DPMSolverMultistepScheduler # DPM++ 2M Karras Scheduler
-# from diffusers import EulerAncestralDiscreteScheduler  # DPM++ SDE Karras Scheduler error
+# from diffusers import EulerAncestralDiscreteScheduler # DPM++ SDE Karras Scheduler error
 import gradio as gr
 import random
 from PIL import ImageEnhance
