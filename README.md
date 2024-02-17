@@ -57,7 +57,7 @@ Default scheduler, guidance scale recommended: 4, prior steps recommended=20+
 Sometimes better results than DDPMWuerstchenScheduler(default), guidance scale recommended: 6+, prior steps recommended=20+
 
 ## Scheduler - LCM
-If you select LCM you can use 6+ steps on prior models so the image creation is even faster, guidance scale recommended: 4, prior steps recommended=from 6 to 18
+LCM can use 6+ steps on prior models so the image creation is even faster, guidance scale recommended: 4, prior steps recommended: from 6 to 18
 
 # Output
 Created images will be saved in the "image" folder
