@@ -1,6 +1,7 @@
 # stable_cascade_easy
 Text to Img with Stable Cascade(on gradio interface), required less vram than original example on official Hugginface(https://huggingface.co/stabilityai/stable-cascade):
 - 44 seconds for a 1280x1536 image with a nvidia RTX3060 with 12 GB VRAM
+- 31 seconds with LCM Scheduler for a 1280x1536 image with a nvidia RTX3060 with 12 GB VRAM
 ![](src/screenshot.png)
 
 ## Why is stable_cascade_easy faster than hugginface example of stability ai?
