@@ -5,7 +5,7 @@ path = os.path.abspath("src")
 sys.path.append(path)
 import time
 import torch
-from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline # Stabke Cascade
+from diffusers import StableCascadeDecoderPipeline, StableCascadePriorPipeline # Stable Cascade
 from diffusers import LCMScheduler # LCM Scheduler
 # from diffusers import DPMSolverSinglestepScheduler # Euler a Scheduler error
 from diffusers import DPMSolverMultistepScheduler # DPM++ 2M Karras Scheduler
