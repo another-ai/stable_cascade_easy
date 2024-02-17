@@ -11,7 +11,7 @@ Answer: Because stable cascade is composed of two models, many gb each... stabil
 
 # Versions:
 - v1.0: First version
-- v1.1: Diffusion fix
+- v1.1: Diffusers fix
 - v1.2: Scheduler drop down menu(with LCM and DPM++ 2M Karras compatibility)
 
 # Diffusers
