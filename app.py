@@ -16,7 +16,6 @@ from PIL import ImageEnhance
 import image_save_file
 from dotenv import load_dotenv
 
-
 def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
     return im_constrast
