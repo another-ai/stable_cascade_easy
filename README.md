@@ -51,7 +51,7 @@ py app.py
 You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior model, decode model only works with default scheduler.
 
 ## Scheduler - DDPMWuerstchenScheduler(default)
-Default Scheduler, guidance scale recommended: 4, prior steps recommended=20+
+Default scheduler, guidance scale recommended: 4, prior steps recommended=20+
 
 ## Scheduler - DPM++ 2M Karras
 Sometimes better results than DDPMWuerstchenScheduler(default), guidance scale recommended: 6+, prior steps recommended=20+
