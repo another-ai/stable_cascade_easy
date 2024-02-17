@@ -174,7 +174,4 @@ with gr.Blocks() as demo:
             output_image=gr.Image()
             output_text=gr.Textbox()
     btn.click(image_print_create, inputs=[prompt, negative_prompt,sampler_choice,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_image,output_text])
-    allow_flagging="never"
-    live=False
-    inbrowser=True
-demo.launch()
+demo.launch(inbrowser=True)
