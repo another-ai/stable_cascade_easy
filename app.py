@@ -144,6 +144,7 @@ if __name__ == "__main__":
     load_dotenv("./env/.env")
 
     default_negative_prompt = os.getenv("negative_prompt", "")
+    default_sampler = os.getenv("sampler", "DDPMWuerstchenScheduler")
     default_random_seed = os.getenv("random_seed", "true").lower() == "true"
     default_input_seed = int(os.getenv("input_seed", "1234"))
     default_width = int(os.getenv("width", "768"))
@@ -154,22 +155,27 @@ if __name__ == "__main__":
     default_contrast = float(os.getenv("contrast", "1"))
     sampler_choice_list= ["DDPMWuerstchenScheduler","DPM++ 2M Karras","LCM"]
     
-    interface = gr.Interface(
-        fn=image_print_create,
-        inputs=[gr.Textbox(value="", lines=4, label="Prompt"),
-                gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt"),
-                gr.Dropdown(value="DDPMWuerstchenScheduler", choices=sampler_choice_list, label="Scheduler"),
-                gr.Checkbox(value=default_random_seed, label="Random Seed"),
-                gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999),
-                gr.Number(value=default_width, label="Width",step=100),
-                gr.Number(value=default_height, label="Height",step=100),
-                gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1),
-                gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1),
-                gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1),
-                gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)],
-        outputs=["image","text"],
-        title="stable_cascade_easy",
-        allow_flagging="never",
-        live=False
-    )
-    interface.launch(share=False, inbrowser=True)
+with gr.Blocks() as demo:
+    with gr.Row():
+        with gr.Column():
+            title="stable_cascade_easy"
+            prompt=gr.Textbox(value="", lines=4, label="Prompt")
+            negative_prompt=gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt")
+            sampler_choice=gr.Dropdown(value=default_sampler, choices=sampler_choice_list, label="Scheduler")
+            random_seed=gr.Checkbox(value=default_random_seed, label="Random Seed")
+            input_seed=gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999)
+            width=gr.Number(value=default_width, label="Width",step=100)
+            height=gr.Number(value=default_height, label="Height",step=100)
+            guidance_scale=gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1)
+            num_inference_steps=gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1)
+            num_inference_steps_decode=gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1)
+            contrast=gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)
+            btn = gr.Button(value="Submit")
+        with gr.Column():
+            output_image=gr.Image()
+            output_text=gr.Textbox()
+    btn.click(image_print_create, inputs=[prompt, negative_prompt,sampler_choice,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_image,output_text])
+    allow_flagging="never"
+    live=False
+    inbrowser=True
+demo.launch()
