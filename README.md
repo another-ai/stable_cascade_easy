@@ -13,6 +13,7 @@ Answer: because stable cascade is composed of two models, many gb each, stabilit
 - v1.0: First version
 - v1.1: Diffusers fix
 - v1.2: Scheduler drop down menu(with LCM and DPM++ 2M Karras compatibility)
+- v1.2.5: Added "Batch Size", number of images per prompt at the same time
 
 # Diffusers
 The diffusers branch is currently broken, meanwhile you can install it from an older commit(--force needed):
