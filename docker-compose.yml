@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  app: 
+    build: .
+    ports:
+      - "${WEBUI_PORT:-7860}:7860"
+    stop_signal: SIGKILL
+    tty: true
+    volumes:
+      - ./data/.cache:/root/.cache
+      - ./data/image:/stable-cascade/image
+    deploy:
+      resources:
+        reservations:
+          devices:
+              - driver: nvidia
+                device_ids: ['0']
+                capabilities: [compute, utility]
+    environment:
+      - CLI_ARGS=
