@@ -18,9 +18,9 @@ def replace_word(text, banned_words=[],prompt_chara=False):
 
     return cleaned_text
 
-def main_def(prompt_input, max_tokens=256, DEVICE="cuda", banned_words=[], prompt_chara=False): # device = cuda or cpu
-    if prompt_input == "":
-        prompt_input = "1woman"
+def main_def(prompt_input, max_tokens=256, DEVICE="cpu", banned_words=[], prompt_chara=False):
+    # if prompt_input == "":
+    #   prompt_input = "1woman"
 
     MODEL_NAME = "isek-ai/SDPrompt-RetNet-v2-beta"
 
