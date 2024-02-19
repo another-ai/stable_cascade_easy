@@ -50,7 +50,7 @@ py app.py
 3. ```pip install -r requirements.txt```
 
 # Magic Prompt
-From v1.3 you can choose how many tokens you want and llama will create the prompt for you(based on prompt that you have previously inserted, 0 = magic prompt deactivate, 64 = usually good results)
+From v1.3 you can choose how many tokens you want and llama will create the prompt for you(based on prompt that you have previously inserted, 0 = magic prompt deactivate, 32/64 = usually good results)
 - Thanks to https://huggingface.co/isek-ai/SDPrompt-RetNet-v2-beta, the first time you will use the magic prompt, the system automatically downloads the necessary llama model.
 
 # Scheduler
