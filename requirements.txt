@@ -8,6 +8,7 @@ transformers==4.37.2
 numpy==1.26.4
 kornia==0.7.1
 insightface==0.7.3
+llama-cpp-python==0.2.26
 opencv-python==4.9.0.80
 tqdm==4.66.2
 matplotlib==3.8.2
