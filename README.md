@@ -60,18 +60,20 @@ python3 app.py
 it will take a while to download the models and launch the Web UI in your default browser.
 
 to launch again you can write a new file in your text editor and save in in the stable_cascade_easy directory. save the file as start.sh
-here's the text you need to write in the start.sh file, you need to change "user" to your own user name:
+here's the text you need to write in the ```start.sh``` file, you need to change "user" to your own user name:
 
-#!/bin/bash
+```#!/bin/bash```
 
 Specify the paths to your virtual environment and start.py script
-venv_path="/home/user/stable_cascade_easy"
+```venv_path="/home/user/stable_cascade_easy"```
 
 Open a new Gnome terminal window
+```bash
 gnome-terminal --working-directory=$venv_path -- bash -ic
 "source env/bin/activate;
 python3 app.py;
 exec bash"
+```
 
 # Run:
 ### Method 1
