@@ -39,23 +39,23 @@ pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9
 #### (Thanks to @blahouel)
 
 1- Clone the repository:
-git clone https://github.com/another-ai/stable_cascade_easy.git
+git clone ```https://github.com/another-ai/stable_cascade_easy.git```
 
 2- open terminal in the cloned directory: stable_cascade_easy
 type the following prompt:
-python3 -m venv env
+```python3 -m venv env```
 
 3- to activate the virtual environment type:
-source env/bin/activate
+```source env/bin/activate```
 
 4- your terminal will change to (env) for the new commands. Type the following
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 5 - when the requirements are all installed type the following:
-pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
+```pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force```
 
 6- the git pull will now work without errors. when install is finished type the following
-python3 app.py
+```python3 app.py```
 
 it will take a while to download the models and launch the Web UI in your default browser.
 
