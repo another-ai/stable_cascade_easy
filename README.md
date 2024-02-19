@@ -36,7 +36,7 @@ pip install -r requirements.txt
 pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
 ```
 # Installation on Linux:
-(Thanks to @blahouel)
+- (Thanks to @blahouel)
 1- Clone the repository:
 git clone https://github.com/another-ai/stable_cascade_easy.git
 
