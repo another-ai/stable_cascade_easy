@@ -48,6 +48,10 @@ py app.py
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
 
+# Magic Prompt
+From v1.3 you can choose how many tokens you want and llama will create the prompt for you(based on prompt that you have previously inserted, 0 = magic prompt deactivate, 64 = usually good results)
+- Thanks to https://huggingface.co/isek-ai/SDPrompt-RetNet-v2-beta, the first time you use the magic prompt, the system automatically downloads the necessary llama model.
+
 # Scheduler
 You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior model, decode model only works with default scheduler.
 
