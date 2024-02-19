@@ -16,21 +16,57 @@ from PIL import ImageEnhance
 import image_save_file
 from dotenv import load_dotenv
 
+if torch.cuda.is_available():
+    device = "cuda"
+elif torch.backends.mps.is_available():
+    device = "mps"
+else:
+    device = "cpu"
+
+prior = None
+decode = None
+
+def load_prior():
+    global prior
+    prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-prior", torch_dtype=torch.bfloat16).to(device)
+    prior.safety_checker = None
+    prior.requires_safety_checker = False
+
+def load_decode():
+    global decode
+    decode = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
+    decode.safety_checker = None
+    decode.requires_safety_checker = False
+
 def constrast_image(image_file, factor):
     im_constrast = ImageEnhance.Contrast(image_file).enhance(factor)
     return im_constrast
 
-def image_print_create(prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
+def generate_image(prompt_input,dynamic_prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast):
 
-    if torch.cuda.is_available():
-        device = "cuda"
-    elif torch.backends.mps.is_available():
-        device = "mps"
-    else:
-        device = "cpu"
+    def remove_duplicates(words):
+        words_list = words.split(",")
+        unique_words = []
+        for word in words_list:
+            if word not in unique_words:
+                unique_words.append(word)
+        unique_string = ",".join(unique_words)
+        return unique_string
+                
     num_images_per_prompt = num_images_per_prompt
 
-    if prompt =="":
+    if dynamic_prompt > 0:
+        if prompt_input != "":
+            if prompt_input[-1] != ",":
+                prompt_input = prompt_input + ","
+        banned_words = os.getenv("banned_words", "").split(",")
+        import app_retnet
+        prompt = app_retnet.main_def(prompt_input=prompt_input, max_tokens=dynamic_prompt, DEVICE="cpu", banned_words=banned_words)
+        prompt = remove_duplicates(prompt)
+    else:
+        prompt = prompt_input
+
+    if prompt == "":
         prompt = "a cat with the sign: prompt not found, write in black"
     negative_prompt = negative_prompt
 
@@ -42,7 +78,7 @@ def image_print_create(prompt,negative_prompt,sampler_choice,num_images_per_prom
     if float(guidance_scale).is_integer():
         guidance_scale = int(guidance_scale) # for txt_file_data correct format
 
-    print("Prompt: " + prompt)
+    print(f"Prompt: {prompt}")
         
     resize_pixel_w = width % 128
     resize_pixel_h = height % 128
@@ -55,11 +91,7 @@ def image_print_create(prompt,negative_prompt,sampler_choice,num_images_per_prom
     
     start_time = time.time()
     
-    prior = StableCascadePriorPipeline.from_pretrained("stabilityai/stable-cascade-prior", torch_dtype=torch.bfloat16).to(device)
-    prior.safety_checker = None
-    prior.requires_safety_checker = False
-
-    
+    global prior
     match sampler_choice:
         case "DPM++ 2M Karras":
             sampler = "DPM++ 2M Karras"
@@ -86,21 +118,20 @@ def image_print_create(prompt,negative_prompt,sampler_choice,num_images_per_prom
     if device=="cuda":
         torch.cuda.empty_cache()
 
-    decoder = StableCascadeDecoderPipeline.from_pretrained("stabilityai/stable-cascade", torch_dtype=torch.float16).to(device)
-    decoder.safety_checker = None
-    decoder.requires_safety_checker = False
+    load_decode()
 
     """ # error with different scheduler in decode than DDPMWuerstchenScheduler
     match sampler_choice:
         case "DPM++ 2M Karras":
-            decoder.scheduler = DPMSolverMultistepScheduler.from_config(decoder.scheduler.config, use_karras_sigmas='true')
+            decode.scheduler = DPMSolverMultistepScheduler.from_config(decode.scheduler.config, use_karras_sigmas='true')
         case "LCM":
-            decoder.scheduler = LCMScheduler.from_config(decoder.scheduler.config) 
+            decode.scheduler = LCMScheduler.from_config(decode.scheduler.config) 
         case _:
             sampler = "DDPMWuerstchenScheduler" #default
     """
 
-    images = decoder(image_embeddings=prior_output.image_embeddings.half(),
+    global decode
+    images = decode(image_embeddings=prior_output.image_embeddings.half(),
         prompt=prompt,
         negative_prompt=negative_prompt,
         guidance_scale=0,
@@ -131,13 +162,16 @@ def image_print_create(prompt,negative_prompt,sampler_choice,num_images_per_prom
 
         file_path = image_save_file.save_file(image, txt_file_data)
 
-    del decoder
+    del decode
     gc.collect()
     if device=="cuda":
         torch.cuda.empty_cache()
 
     return_txt_file_data = f"{txt_file_data}\nTime: {duration} seconds."
-    return images, return_txt_file_data
+
+    load_prior()
+
+    yield images, return_txt_file_data
 
 if __name__ == "__main__":
 
@@ -155,26 +189,33 @@ if __name__ == "__main__":
     default_num_inference_steps_decode = int(os.getenv("num_inference_steps_decode", "12"))
     default_contrast = float(os.getenv("contrast", "1"))
     sampler_choice_list= ["DDPMWuerstchenScheduler","DPM++ 2M Karras","LCM"]
-    
-with gr.Blocks() as demo:
-    with gr.Row():
-        with gr.Column():
-            title="stable_cascade_easy"
-            prompt=gr.Textbox(value="", lines=4, label="Prompt")
-            negative_prompt=gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt")
-            sampler_choice=gr.Dropdown(value=default_sampler, choices=sampler_choice_list, label="Scheduler")
-            num_images_per_prompt=gr.Number(value=default_batch_size, label="Batch Size",step=1,minimum=1,maximum=16)
-            random_seed=gr.Checkbox(value=default_random_seed, label="Random Seed")
-            input_seed=gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999)
-            width=gr.Number(value=default_width, label="Width",step=100)
-            height=gr.Number(value=default_height, label="Height",step=100)
-            guidance_scale=gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1)
-            num_inference_steps=gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1)
-            num_inference_steps_decode=gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1)
-            contrast=gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)
-            btn_generate = gr.Button(value="Generate")
-        with gr.Column():
-            output_images=gr.Gallery(allow_preview=True, preview=True, label="Genrated Images", show_label=True)
-            output_text=gr.Textbox(label="Metadata")
-    btn_generate.click(image_print_create, inputs=[prompt, negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_images,output_text])
-demo.launch(inbrowser=True)
+    dynamic_prompt=int(os.getenv("dynamic_prompt", "0"))
+    load_prior()
+
+    generator_image = generate_image
+
+    with gr.Blocks() as demo:
+        with gr.Row():
+            with gr.Column():
+                title="stable_cascade_easy"
+                prompt_input=gr.Textbox(value="", lines=4, label="Prompt")
+                dynamic_prompt = gr.Number(value=dynamic_prompt, label="Magic Prompt(max tokens, 0=off)",step=32,minimum=0,maximum=1024)
+                negative_prompt=gr.Textbox(value=default_negative_prompt, lines=4, label="Negative Prompt")
+                sampler_choice=gr.Dropdown(value=default_sampler, choices=sampler_choice_list, label="Scheduler")
+                num_images_per_prompt=gr.Number(value=default_batch_size, label="Batch Size",step=1,minimum=1,maximum=16)
+                random_seed=gr.Checkbox(value=default_random_seed, label="Random Seed")
+                input_seed=gr.Number(value=default_input_seed, label="Input Seed",step=1,minimum=0, maximum=9999999999)
+                width=gr.Number(value=default_width, label="Width",step=100)
+                height=gr.Number(value=default_height, label="Height",step=100)
+                guidance_scale=gr.Number(value=default_guidance_scale, label="Guidance Scale",step=1)
+                with gr.Row():
+                    num_inference_steps=gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1)
+                    num_inference_steps_decode=gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1)
+                contrast=gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)
+                btn_generate = gr.Button(value="Generate")
+            with gr.Column():
+                output_images=gr.Gallery(allow_preview=True, preview=True, label="Genrated Images", show_label=True)
+                output_text=gr.Textbox(label="Metadata")
+        btn_generate.click(generator_image, inputs=[prompt_input,dynamic_prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_images,output_text])
+
+    demo.launch(inbrowser=True)
