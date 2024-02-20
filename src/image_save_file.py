@@ -1,7 +1,7 @@
 import os
 from datetime import datetime as date_time
 import re
-from PIL import Image, ImageEnhance
+from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 
 def count_file(directory_path_temp):
@@ -34,8 +34,8 @@ def save_file(image_file, txt_file_data_file):
     file_path = ""
     if image_file != "":
         current_datetime = date_time.now()
-        current_date = current_datetime.strftime("%Y_%m_%d")
-        current_time = current_datetime.strftime("%H_%M_%S")
+        current_date = current_datetime.strftime(f"%Y_%m_%d")
+        current_time = current_datetime.strftime(f"%H_%M_%S")
         if not os.path.exists("./image"):
             os.makedirs("./image")
         if not os.path.exists("./image/" + current_date):
