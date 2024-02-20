@@ -75,7 +75,7 @@ python3 app.py;
 exec bash"
 ```
 
-# Run:
+# Run on Windows:
 ### Method 1
 Double click on ```app.bat``` on stable_cascade_easy directory
 ### Method 2
