@@ -1,4 +1,5 @@
 import os
+from datetime import datetime as date_time
 import sys
 import gc
 path = os.path.abspath("src")
@@ -15,6 +16,7 @@ import random
 from PIL import ImageEnhance
 import image_save_file
 from dotenv import load_dotenv
+import platform
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -173,6 +175,22 @@ def generate_image(prompt_input,dynamic_prompt,negative_prompt,sampler_choice,nu
 
     yield images, return_txt_file_data
 
+def open_dir(dir="image"):
+    current_datetime = date_time.now()
+    current_date = current_datetime.strftime(f"%Y_%m_%d")
+    folder = os.getcwd() + "/" + dir + "/" + current_date
+    if not os.path.exists(folder):
+        folder =  os.getcwd() + "/" + dir
+
+    if os.path.exists(folder):
+        operating_system = platform.system()
+        if operating_system == 'Windows':
+            os.startfile(folder)
+        elif operating_system == 'Darwin':
+            os.system('open "{}"'.format(folder))
+        elif operating_system == 'Linux':
+            os.system('xdg-open "{}"'.format(folder))
+
 if __name__ == "__main__":
 
     load_dotenv("./env/.env")
@@ -215,7 +233,8 @@ if __name__ == "__main__":
                 btn_generate = gr.Button(value="Generate")
             with gr.Column():
                 output_images=gr.Gallery(allow_preview=True, preview=True, label="Genrated Images", show_label=True)
+                btn_open_dir = gr.Button(value="Open Image Dir")
                 output_text=gr.Textbox(label="Metadata")
         btn_generate.click(generator_image, inputs=[prompt_input,dynamic_prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_images,output_text])
-
+        btn_open_dir.click(open_dir, inputs=[], outputs=[])
     demo.launch(inbrowser=True)
