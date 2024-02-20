@@ -175,6 +175,16 @@ def generate_image(prompt_input,dynamic_prompt,negative_prompt,sampler_choice,nu
 
     yield images, return_txt_file_data
 
+def stop_gen():
+    try:
+        del decode
+        del prior
+        gc.collect()
+        torch.cuda.empty_cache()
+    finally:
+        os.execv(sys.executable, [sys.executable, __file__, "restart"])    
+
+
 def open_dir(dir="image"):
     current_datetime = date_time.now()
     current_date = current_datetime.strftime(f"%Y_%m_%d")
@@ -212,6 +222,11 @@ if __name__ == "__main__":
 
     generator_image = generate_image
 
+    inbrowser_ = True
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "restart":
+            inbrowser_ = False 
+
     with gr.Blocks() as demo:
         with gr.Row():
             with gr.Column():
@@ -230,11 +245,14 @@ if __name__ == "__main__":
                     num_inference_steps=gr.Number(value=default_num_inference_steps, label="Steps Prior",step=1)
                     num_inference_steps_decode=gr.Number(value=default_num_inference_steps_decode, label="Steps Decode",step=1)
                 contrast=gr.Slider(value=default_contrast, label="Contrast",step=0.05,minimum=0.5,maximum=1.5)
-                btn_generate = gr.Button(value="Generate")
+                with gr.Row():  
+                    btn_stop_gen = gr.Button(value="Stop")
+                    btn_generate = gr.Button(value="Generate")
             with gr.Column():
                 output_images=gr.Gallery(allow_preview=True, preview=True, label="Genrated Images", show_label=True)
                 btn_open_dir = gr.Button(value="Open Image Directory")
                 output_text=gr.Textbox(label="Metadata")
         btn_generate.click(generator_image, inputs=[prompt_input,dynamic_prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_images,output_text])
         btn_open_dir.click(open_dir, inputs=[], outputs=[])
-    demo.launch(inbrowser=True)
+        btn_stop_gen.click(stop_gen, inputs=[], outputs=[])
+    demo.launch(inbrowser=inbrowser_)
