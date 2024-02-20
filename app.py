@@ -233,7 +233,7 @@ if __name__ == "__main__":
                 btn_generate = gr.Button(value="Generate")
             with gr.Column():
                 output_images=gr.Gallery(allow_preview=True, preview=True, label="Genrated Images", show_label=True)
-                btn_open_dir = gr.Button(value="Open Image Dir")
+                btn_open_dir = gr.Button(value="Open Image Directory")
                 output_text=gr.Textbox(label="Metadata")
         btn_generate.click(generator_image, inputs=[prompt_input,dynamic_prompt,negative_prompt,sampler_choice,num_images_per_prompt,random_seed,input_seed,width,height,guidance_scale,num_inference_steps,num_inference_steps_decode,contrast],outputs=[output_images,output_text])
         btn_open_dir.click(open_dir, inputs=[], outputs=[])
