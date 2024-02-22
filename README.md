@@ -79,10 +79,10 @@ exec bash"
 #### (Thanks to @blahouel)
 1- in the installation directory open terminal:
 type in the following command:
-source env/bin/activate
+```source env/bin/activate```
 
 2- type in the next commend:
-pip install peft
+```pip install peft```
 
 3- after installation exit the terminal and restart stable cascade.
 
