@@ -54,8 +54,6 @@ def generate_image(prompt_input,dynamic_prompt,negative_prompt,sampler_choice,nu
                 unique_words.append(word)
         unique_string = ",".join(unique_words)
         return unique_string
-                
-    num_images_per_prompt = num_images_per_prompt
 
     if dynamic_prompt > 0:
         if prompt_input != "":
