@@ -84,7 +84,7 @@ type in the following command:
 2- type in the next commend:
 ```pip install peft```
 
-3- after installation exit the terminal and restart stable cascade.
+3- after installation: exit the terminal and restart stable cascade.
 
 # Run on Windows:
 ### Method 1
