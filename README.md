@@ -81,8 +81,7 @@ exec bash"
 type in the following command:
 ```source env/bin/activate```
 
-2- type in the next commend:
-```pip install peft```
+2- type in the next commend: ```pip install peft```
 
 3- after installation: exit the terminal and restart stable cascade.
 
