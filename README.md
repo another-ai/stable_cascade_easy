@@ -18,7 +18,7 @@ Answer: because stable cascade is composed of two models, many gb each, stabilit
 - v1.4: Now you can select your favourite Stable Cascade Checkpoint
 
 # Bug: 
-With different checkpoint than default Stable Cascade, same seed = different images
+With a different checkpoint than default Stable Cascade, same seed = different images
 
 # Installation on Windows:
 1. Install [Python 3.10.6](https://www.python.org/downloads/release/python-3106/), checking "Add Python to PATH".
