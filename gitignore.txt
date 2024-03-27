@@ -1,0 +1,11 @@
+__pycache__
+**/__pycache__
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.env
+/tmp
+/env
+/venv
+/python_emb

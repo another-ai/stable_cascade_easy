@@ -14,7 +14,6 @@ Answer: because stable cascade is composed of two models, many gb each, stabilit
 - v1.1: Diffusers fix
 - v1.2: Scheduler drop down menu(with LCM and DPM++ 2M Karras compatibility)
 - v1.2.5: Added "Batch Size", number of images per prompt at the same time
-- v1.3: Added "Magic Prompt"(prompt auto-creation)
 
 # Diffusers
 The diffusers branch is currently broken, meanwhile you can install it from an older commit(--force needed):
@@ -23,7 +22,7 @@ The diffusers branch is currently broken, meanwhile you can install it from an o
 pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
  ```
 
-# Installation on Windows:
+# Installation:
 1. Install [Python 3.10.6](https://www.python.org/downloads/release/python-3106/), checking "Add Python to PATH".
 2. Install [git](https://git-scm.com/download/win).
 3. On terminal:
@@ -35,57 +34,7 @@ py -m venv venv
 pip install -r requirements.txt
 pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force
 ```
-# Installation on Linux:
-#### (Thanks to @blahouel)
-
-1- Clone the repository:
-git clone ```https://github.com/another-ai/stable_cascade_easy.git```
-
-2- open terminal in the cloned directory: stable_cascade_easy
-type the following prompt:
-```python3 -m venv env```
-
-3- to activate the virtual environment type:
-```source env/bin/activate```
-
-4- your terminal will change to (env) for the new commands. Type the following
-```pip install -r requirements.txt```
-
-5 - when the requirements are all installed type the following:
-```pip install git+https://github.com/kashif/diffusers.git@a3dc21385b7386beb3dab3a9845962ede6765887 --force```
-
-6- the git pull will now work without errors. when install is finished type the following
-```python3 app.py```
-
-it will take a while to download the models and launch the Web UI in your default browser.
-
-to launch again you can write a new file in your text editor and save in in the stable_cascade_easy directory. save the file as start.sh
-here's the text you need to write in the ```start.sh``` file, you need to change "user" to your own user name:
-
-```#!/bin/bash```
-
-Specify the paths to your virtual environment and start.py script
-```venv_path="/home/user/stable_cascade_easy"```
-
-Open a new Gnome terminal window
-```bash
-gnome-terminal --working-directory=$venv_path -- bash -ic
-"source env/bin/activate;
-python3 app.py;
-exec bash"
-```
-
-## Avoid warnings about deprecated packages "Peft"(Linux) - not necessary from v1.3 because peft is already in requirements.txt:
-#### (Thanks to @blahouel)
-1- in the installation directory open terminal:
-type in the following command:
-```source env/bin/activate```
-
-2- type in the next commend: ```pip install peft```
-
-3- after installation: exit the terminal and restart stable cascade.
-
-# Run on Windows:
+# Run:
 ### Method 1
 Double click on ```app.bat``` on stable_cascade_easy directory
 ### Method 2
@@ -98,10 +47,6 @@ py app.py
 1. ```git pull```(if error: ```git stash``` and after ```git pull```)
 2. ```.\venv\Scripts\activate```
 3. ```pip install -r requirements.txt```
-
-# Magic Prompt
-From v1.3 you can choose how many tokens you want and llama will create the prompt for you(based on prompt that you have previously inserted, 0 = magic prompt deactivate, 32/64 = usually good results)
-- Thanks to https://huggingface.co/isek-ai/SDPrompt-RetNet-v2-beta, the first time you will use the magic prompt, the system automatically downloads the necessary llama model.
 
 # Scheduler
 You can choose between DDPMWuerstchenScheduler(default), DPM++ 2M Karras and LCM. Euler a and DPM++ SDE Karras create errors so it can't be selected, scheduler only for prior model, decode model only works with default scheduler.
