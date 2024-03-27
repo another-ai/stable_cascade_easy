@@ -17,7 +17,7 @@ Answer: because stable cascade is composed of two models, many gb each, stabilit
 - v1.3: Added "Magic Prompt"(prompt auto-creation)
 - v1.4: Now you can select your favourite Stable Cascade Checkpoint(in ```.\stable_cascade``` directory)
 
-# Bug: 
+# Issues: 
 With a different checkpoint than default Stable Cascade, same seed = different images
 
 # Installation on Windows:
