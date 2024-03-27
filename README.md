@@ -15,7 +15,7 @@ Answer: because stable cascade is composed of two models, many gb each, stabilit
 - v1.2: Scheduler drop down menu(with LCM and DPM++ 2M Karras compatibility)
 - v1.2.5: Added "Batch Size", number of images per prompt at the same time
 - v1.3: Added "Magic Prompt"(prompt auto-creation)
-- v1.4: Now you can select your favourite Stable Cascade Checkpoint
+- v1.4: Now you can select your favourite Stable Cascade Checkpoint(in '''.\stable_cascade''' directory)
 
 # Bug: 
 With a different checkpoint than default Stable Cascade, same seed = different images
