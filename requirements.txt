@@ -20,6 +20,6 @@ onnxruntime==1.17.0
 einops==0.7.0
 onnx2torch==1.5.13
 peft==0.8.2
-diffusers==0.27.0
+diffusers==0.27.2
 warmup-scheduler @ git+https://github.com/ildoonet/pytorch-gradual-warmup-lr.git
 torchtools @ git+https://github.com/pabloppp/pytorch-tools
