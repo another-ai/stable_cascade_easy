@@ -57,7 +57,7 @@ def generate_image(checkpoint_basename,checkpoint_prior,checkpoint_decoder,promp
         banned_words = os.getenv("banned_words", "").split(",")
         import app_retnet
         prompt = app_retnet.main_def(prompt_input=prompt_input, max_tokens=dynamic_prompt, DEVICE="cpu", banned_words=banned_words, prompt_chara=False)
-        prompt = remove_duplicates(prompt)
+        prompt = remove_duplicates(prompt.lower())
         prompt = remove_last_comma(prompt)
     else:
         prompt = prompt_input
