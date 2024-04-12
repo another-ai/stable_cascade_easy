@@ -5,7 +5,7 @@ torchvision==0.17.1+cu118
 accelerate==0.27.2
 gradio==4.23.0
 python-dotenv==1.0.1
-transformers==4.37.2
+transformers==4.38.0
 numpy==1.26.4
 kornia==0.7.1
 insightface==0.7.3
