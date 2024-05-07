@@ -11,7 +11,7 @@ kornia==0.7.1
 insightface==0.7.3
 llama-cpp-python==0.2.26
 opencv-python==4.9.0.80
-tqdm==4.66.2
+tqdm==4.66.3
 matplotlib==3.8.2
 webdataset==0.2.86
 wandb==0.16.3
